@@ -101,7 +101,7 @@ export const NavigationComponent = () => {
         <motion.a href="https://github.com/4cub3" target="blank" initial={{ opacity: 0.5 }} whileHover={{ opacity: 1 }}>
           <RiGithubFill className="text-zinc-100" />
         </motion.a>
-        <motion.a href="https://linkedin.com/akintunde-adedoyin" target="blank" initial={{ opacity: 0.5 }} whileHover={{ opacity: 1 }}>
+        <motion.a href="https://www.linkedin.com/in/adedoyin-akintunde-9a60901b4/" target="blank" initial={{ opacity: 0.5 }} whileHover={{ opacity: 1 }}>
           <RiLinkedinBoxFill className="text-zinc-100" />
         </motion.a>
 

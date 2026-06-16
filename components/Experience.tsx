@@ -38,7 +38,7 @@ export const Experience = () => {
                 </ul>
             </motion.div>
             <footer className="my-10 px-15">
-                <a href="/file/Akintunde-Adedoyin-Afolabi-CV.pdf" download={"Akintunde_Adedoyin_Afolabi.pdf"} className="capitalize flex gap-4 items-center text-zinc-50">
+                <a href="/file/Akintunde-Adedoyin-Afolabi-CV.pdf" target="blank" className="capitalize flex gap-4 items-center text-zinc-50">
                     View Full resume <RiExternalLinkLine />
                 </a>
             </footer>
