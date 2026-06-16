@@ -3,9 +3,9 @@
 import { RiGithubFill, RiLinkedinBoxFill, RiMailFill } from "@remixicon/react"
 import { motion } from "motion/react"
 import { usePathname, useSearchParams } from "next/navigation"
-import { useEffect, useState } from "react"
+import { Suspense, useEffect, useState } from "react"
 
-export const Navigation = () => {
+export const NavigationComponent = () => {
   const [hash, setHash] = useState("#about")
   const [hoveredItem, setHoveredItem] = useState<string | null>(null)
 
@@ -111,4 +111,12 @@ export const Navigation = () => {
       </section>
     </aside>
   )
+}
+
+export  function Navigation() {
+  return (
+    <Suspense fallback={<>Loading...</>}>
+      <NavigationComponent />
+    </Suspense>
+  );
 }
