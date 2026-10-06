@@ -14,6 +14,27 @@ export const PROJECT_DATA = [
     description: "AI-powered platform solutions across healthcare, pension, and financial services.",
   },
   {
+    id: "001",
+    image: "/images/projects/pension.png",
+    title: "Pension AI",
+    link: "https://pensiondata.ai/",
+    description: "AI-Powered Data Automation for Pension Fund Administrators & Custodians",
+  },
+  {
+    id: "002",
+    image: "/images/projects/sulos.png",
+    title: "Sulos",
+    link: "https://mysulos.com/",
+    description: "Sulos’ cloud-based, HIPAA-compliant solution enables continuous communication and proactive management across your entire patient population, emphasizing early intervention and transparency for everyone involved.",
+  },
+  {
+    id: "003",
+    image: "/images/projects/assetlane.png",
+    title: "AssetLane",
+    link: "https://assetlane.ai/",
+    description: "Independent automotive advisory"
+  },
+  {
     id: "02",
     image: "/images/projects/whitefalls.png",
     title: "Whitefalls Energy",

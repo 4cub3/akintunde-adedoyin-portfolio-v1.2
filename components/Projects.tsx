@@ -15,7 +15,7 @@ export const Projects = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
             className="mb-20"
-            >
+        >
             <motion.div
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
@@ -33,8 +33,8 @@ export const Projects = () => {
                 </Title>
                 <div className='px-15 mt-10 '>
                     <ul className="">
-                        {PROJECT_DATA.map((item,idx)=>(<li key={idx} className="group">
-                            <ProjectCard project={item}/>
+                        {PROJECT_DATA.map((item, idx) => (<li key={idx} className="group">
+                            <ProjectCard project={item} />
                         </li>))}
                     </ul>
                 </div>
