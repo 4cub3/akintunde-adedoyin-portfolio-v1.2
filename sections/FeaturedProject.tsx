@@ -13,18 +13,55 @@ import {
 } from "@/lib/content";
 
 export function FeaturedProject() {
-  const [projectIndex, setProjectIndex] = useState(0);
-  const [slideIndex, setSlideIndex] = useState(0);
   const reducedMotion = useReducedMotion();
 
-  const project = featuredProjects[projectIndex];
+  return (
+    <section
+      id="featured"
+      className="scroll-mt-24 border-t border-border py-20 md:py-28"
+      aria-labelledby="featured-heading"
+    >
+      <Container>
+        <FadeIn>
+          <div className="mb-12 max-w-2xl space-y-3">
+            <p className="text-xs font-medium uppercase tracking-[0.2em] text-accent">
+              Featured projects
+            </p>
+            <h2
+              id="featured-heading"
+              className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
+            >
+              Case studies
+            </h2>
+            <p className="text-base leading-relaxed text-muted">
+              Deep dives into production platforms I led or took over and kept
+              shipping.
+            </p>
+          </div>
+        </FadeIn>
+
+        <div className="space-y-20 md:space-y-28">
+          {featuredProjects.map((project, index) => (
+            <FadeIn key={project.id} delay={index === 0 ? 0.05 : 0}>
+              <CaseStudy project={project} reducedMotion={!!reducedMotion} />
+            </FadeIn>
+          ))}
+        </div>
+      </Container>
+    </section>
+  );
+}
+
+function CaseStudy({
+  project,
+  reducedMotion,
+}: {
+  project: FeaturedCaseStudy;
+  reducedMotion: boolean;
+}) {
+  const [slideIndex, setSlideIndex] = useState(0);
   const slides = project.slides;
   const active = slides[slideIndex];
-
-  const selectProject = (next: number) => {
-    setProjectIndex(next);
-    setSlideIndex(0);
-  };
 
   const goTo = useCallback(
     (next: number) => {
@@ -42,107 +79,23 @@ export function FeaturedProject() {
       ) {
         return;
       }
+
+      const panel = document.getElementById(`featured-case-${project.id}`);
+      if (!panel) return;
+
+      const rect = panel.getBoundingClientRect();
+      const inView = rect.top < window.innerHeight * 0.65 && rect.bottom > window.innerHeight * 0.35;
+      if (!inView) return;
+
       if (event.key === "ArrowRight") goTo(slideIndex + 1);
       if (event.key === "ArrowLeft") goTo(slideIndex - 1);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [goTo, slideIndex]);
+  }, [goTo, project.id, slideIndex]);
 
   return (
-    <section
-      id="featured"
-      className="scroll-mt-24 border-t border-border py-20 md:py-28"
-      aria-labelledby="featured-heading"
-    >
-      <Container>
-        <FadeIn>
-          <div className="mb-8 space-y-6">
-            <div className="max-w-2xl space-y-3">
-              <p className="text-xs font-medium uppercase tracking-[0.2em] text-accent">
-                Featured projects
-              </p>
-              <h2
-                id="featured-heading"
-                className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl"
-              >
-                Case studies
-              </h2>
-              <p className="text-base leading-relaxed text-muted">
-                Deep dives into production platforms I led or took over and kept
-                shipping.
-              </p>
-            </div>
-
-            <div
-              className="flex flex-wrap gap-2"
-              role="tablist"
-              aria-label="Featured case studies"
-            >
-              {featuredProjects.map((item, index) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={index === projectIndex}
-                  aria-controls="featured-case-panel"
-                  id={`featured-project-${item.id}`}
-                  onClick={() => selectProject(index)}
-                  className={`rounded-full px-4 py-2 text-sm transition-colors duration-300 ease-out ${
-                    index === projectIndex
-                      ? "bg-accent text-white"
-                      : "border border-border text-muted hover:border-accent hover:text-accent"
-                  }`}
-                >
-                  {item.shortName}
-                </button>
-              ))}
-            </div>
-          </div>
-        </FadeIn>
-
-        <FadeIn delay={0.05}>
-          <div
-            id="featured-case-panel"
-            role="tabpanel"
-            aria-labelledby={`featured-project-${project.id}`}
-          >
-            <CaseStudy
-              key={project.id}
-              project={project}
-              slideIndex={slideIndex}
-              active={active}
-              reducedMotion={!!reducedMotion}
-              onSelectSlide={setSlideIndex}
-              onPrev={() => goTo(slideIndex - 1)}
-              onNext={() => goTo(slideIndex + 1)}
-            />
-          </div>
-        </FadeIn>
-      </Container>
-    </section>
-  );
-}
-
-function CaseStudy({
-  project,
-  slideIndex,
-  active,
-  reducedMotion,
-  onSelectSlide,
-  onPrev,
-  onNext,
-}: {
-  project: FeaturedCaseStudy;
-  slideIndex: number;
-  active: FeaturedSlide;
-  reducedMotion: boolean;
-  onSelectSlide: (index: number) => void;
-  onPrev: () => void;
-  onNext: () => void;
-}) {
-  return (
-    <div className="space-y-8">
+    <article id={`featured-case-${project.id}`} className="space-y-8">
       <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div className="max-w-2xl space-y-2">
           <h3 className="text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
@@ -169,9 +122,9 @@ function CaseStudy({
               type="button"
               role="tab"
               aria-selected={index === slideIndex}
-              aria-controls="featured-slide-panel"
+              aria-controls={`featured-slide-panel-${project.id}`}
               id={`featured-tab-${project.id}-${slide.id}`}
-              onClick={() => onSelectSlide(index)}
+              onClick={() => setSlideIndex(index)}
               className={`rounded-full px-3.5 py-1.5 text-sm transition-colors duration-300 ease-out ${
                 index === slideIndex
                   ? "border border-accent/40 bg-accent-soft text-accent"
@@ -185,7 +138,7 @@ function CaseStudy({
       </div>
 
       <div
-        id="featured-slide-panel"
+        id={`featured-slide-panel-${project.id}`}
         role="tabpanel"
         aria-labelledby={`featured-tab-${project.id}-${active.id}`}
         className="grid items-stretch gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-12"
@@ -209,7 +162,7 @@ function CaseStudy({
                     fill
                     className="object-cover object-top"
                     sizes="(max-width: 1024px) 100vw, 640px"
-                    priority={index === 0}
+                    priority={project.id === "cibn" && index === 0}
                   />
                 </div>
               ))}
@@ -224,17 +177,17 @@ function CaseStudy({
             <div className="flex items-center gap-2">
               <button
                 type="button"
-                onClick={onPrev}
+                onClick={() => goTo(slideIndex - 1)}
                 className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border text-foreground transition-colors duration-300 hover:border-accent hover:text-accent"
-                aria-label="Previous slide"
+                aria-label={`Previous ${project.shortName} slide`}
               >
                 <ChevronLeft />
               </button>
               <button
                 type="button"
-                onClick={onNext}
+                onClick={() => goTo(slideIndex + 1)}
                 className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border text-foreground transition-colors duration-300 hover:border-accent hover:text-accent"
-                aria-label="Next slide"
+                aria-label={`Next ${project.shortName} slide`}
               >
                 <ChevronRight />
               </button>
@@ -245,7 +198,7 @@ function CaseStudy({
                 <button
                   key={slide.id}
                   type="button"
-                  onClick={() => onSelectSlide(index)}
+                  onClick={() => setSlideIndex(index)}
                   className={`h-1.5 rounded-full transition-all duration-300 ease-out ${
                     index === slideIndex
                       ? "w-8 bg-accent"
@@ -276,7 +229,7 @@ function CaseStudy({
           </motion.div>
         </AnimatePresence>
       </div>
-    </div>
+    </article>
   );
 }
 
