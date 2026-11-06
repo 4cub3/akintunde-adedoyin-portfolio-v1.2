@@ -10,7 +10,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Akintunde Adedoyin Afolabi | Senior Frontend Engineer",
   description:
-    "Senior frontend engineer who ships production-grade web and mobile products for fintech, healthcare, and logistics.",
+    "Senior frontend engineer with 4+ years shipping React, Next.js, and React Native products across fintech, banking, pension, healthcare, and logistics.",
 };
 
 export default function RootLayout({

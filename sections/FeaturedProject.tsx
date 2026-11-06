@@ -247,7 +247,7 @@ function SlideDetails({ slide }: { slide: FeaturedSlide }) {
       <dl className="mt-8 space-y-5">
         <Detail term="Problem" detail={slide.problem} />
         <Detail term="What I built" detail={slide.built} />
-        <Detail term="Result" detail={slide.result} muted />
+        {slide.result ? <Detail term="Result" detail={slide.result} /> : null}
       </dl>
 
       <div className="mt-8">
@@ -289,25 +289,13 @@ function SlideDetails({ slide }: { slide: FeaturedSlide }) {
   );
 }
 
-function Detail({
-  term,
-  detail,
-  muted = false,
-}: {
-  term: string;
-  detail: string;
-  muted?: boolean;
-}) {
+function Detail({ term, detail }: { term: string; detail: string }) {
   return (
     <div>
       <dt className="text-xs font-medium uppercase tracking-[0.16em] text-accent">
         {term}
       </dt>
-      <dd
-        className={`mt-1.5 text-sm leading-relaxed ${
-          muted ? "text-muted" : "text-foreground/90"
-        }`}
-      >
+      <dd className="mt-1.5 text-sm leading-relaxed text-foreground/90">
         {detail}
       </dd>
     </div>

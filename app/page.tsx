@@ -1,23 +1,14 @@
 import { Navbar } from "@/components/Navbar";
-import {
-  About,
-  Contact,
-  Experience,
-  FeaturedProject,
-  Hero,
-  Projects,
-} from "@/sections";
+import { Contact, Experience, Intro, Projects } from "@/sections";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />
       <main>
-        <Hero />
-        <About />
-        <FeaturedProject />
-        <Projects />
+        <Intro />
         <Experience />
+        <Projects />
         <Contact />
       </main>
       <footer className="border-t border-border py-8">

@@ -7,14 +7,6 @@ import { Container } from "./Container";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -24,13 +16,7 @@ export function Navbar() {
   }, [open]);
 
   return (
-    <header
-      className={`sticky top-0 z-50 border-b transition-colors duration-300 ease-out ${
-        scrolled || open
-          ? "border-border/80 bg-background/90 backdrop-blur-md"
-          : "border-transparent bg-background/70 backdrop-blur-sm"
-      }`}
-    >
+    <header className="sticky top-0 z-50 border-b border-border bg-background">
       <Container className="flex h-16 items-center justify-between">
         <Link
           href="#top"

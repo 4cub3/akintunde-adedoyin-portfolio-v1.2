@@ -1,67 +1,57 @@
 import Link from "next/link";
 import { Container } from "@/components/Container";
-import { FadeIn } from "@/components/FadeIn";
-import { SectionHeading } from "@/components/SectionHeading";
-import { experiences } from "@/lib/content";
+import { education, experiences } from "@/lib/content";
 
 export function Experience() {
   return (
     <section
-      id="experience"
-      className="scroll-mt-24 border-t border-border py-20 md:py-28"
-      aria-labelledby="experience-heading"
+      id="work"
+      className="scroll-mt-24 border-t border-border py-16 md:py-24"
+      aria-labelledby="work-heading"
     >
       <Container>
-        <FadeIn>
-          <SectionHeading
-            id="experience-heading"
-            eyebrow="Experience"
-            title="Where I've shipped"
-          />
-        </FadeIn>
+        <h2
+          id="work-heading"
+          className="text-4xl font-semibold tracking-tight text-foreground sm:text-5xl"
+        >
+          work.
+        </h2>
 
-        <ol className="relative space-y-0 border-l border-border pl-6 md:pl-8">
-          {experiences.map((item, index) => (
-            <FadeIn
-              key={`${item.company}-${item.year}`}
-              as="li"
-              delay={index * 0.04}
-              className="relative pb-12 last:pb-0"
-            >
-              <span
-                className="absolute -left-[1.9rem] top-1.5 h-3 w-3 rounded-full border-2 border-accent bg-background md:-left-[2.4rem]"
-                aria-hidden
-              />
-              <p className="text-xs font-medium uppercase tracking-[0.16em] text-accent">
-                {item.year}
-              </p>
-              <h3 className="mt-2 text-xl font-semibold text-foreground">
+        <ol className="mt-10 max-w-3xl space-y-10">
+          {experiences.map((item) => (
+            <li key={`${item.company}-${item.year}`}>
+              <p className="text-sm text-muted">{item.year}</p>
+              <h3 className="mt-1 text-xl font-semibold text-foreground">
                 <Link
                   href={item.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="transition-colors duration-300 hover:text-accent"
+                  className="underline decoration-border underline-offset-4 transition-colors duration-300 hover:text-accent hover:decoration-accent"
                 >
                   {item.company}
                 </Link>
               </h3>
-              <p className="mt-1 text-sm font-medium text-muted">{item.role}</p>
-              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted">
+              <p className="mt-1 text-sm text-muted">{item.role}</p>
+              <p className="mt-3 text-sm leading-relaxed text-muted">
                 {item.description}
               </p>
-              <ul className="mt-4 flex flex-wrap gap-2">
-                {item.tools.map((tool) => (
-                  <li
-                    key={tool}
-                    className="rounded-md border border-border bg-surface px-2.5 py-1 text-xs text-muted"
-                  >
-                    {tool}
-                  </li>
-                ))}
-              </ul>
-            </FadeIn>
+            </li>
           ))}
         </ol>
+
+        <h2 className="mt-16 text-4xl font-semibold tracking-tight text-foreground sm:text-5xl">
+          education.
+        </h2>
+        <ul className="mt-10 max-w-3xl space-y-8">
+          {education.map((item) => (
+            <li key={item.credential}>
+              <h3 className="text-xl font-semibold text-foreground">
+                {item.credential}
+              </h3>
+              <p className="mt-1 text-sm text-muted">{item.school}</p>
+            </li>
+          ))}
+        </ul>
       </Container>
     </section>
   );
